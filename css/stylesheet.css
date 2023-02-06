@@ -67,8 +67,8 @@ h1 {
     display: inline-block;
     margin-bottom: 1rem;
     color: white;
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: #ed7000;
+    border: 1px solid #ed7000;
     border-radius: 0.3rem;
     transition: color 0.2s, background-color 0.2s, border-color 0.2s;
 }
@@ -77,11 +77,11 @@ h1 {
     margin-left: 1rem;
 }
 
-.btn:hover {
-    color: rgba(255, 255, 255, 0.8);
+.btn:hover, .btn:focus {
+    color: white;
     text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
+    background-color: #526263;
+    border-color: #526263;
 }
 
 .box {
@@ -277,6 +277,7 @@ h1 {
     color: #383e41;
     background-color: #f3f6fa;
     border-radius: 0.3rem;
+    font-size: 16px;
 }
 
 .main-content pre {
