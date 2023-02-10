@@ -1,0 +1,639 @@
+﻿<script src="js/auto_menu.js" xmlns="http://www.w3.org/1999/html"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="menu col-xs-4 col-lg-3">
+            <nav class="navbar nav nav-pills nav-stacked">
+                <div class="menu-items">
+                </div>
+            </nav>
+        </div>
+        <section class="page-header col-xs-8 col-xs-offset-4 col-lg-9 col-lg-offset-3">
+            <section class="col-xs-5 col-xs-offset-5 col-lg-9 col-lg-offset-1">
+                <img class="image-header-postnl-logo" alt="PostNL logo" src="media/PostNL-logo.png">
+            </section>
+            <br/>
+        </section>
+        <section class="main-content col-xs-8 col-xs-offset-4 col-lg-7 col-lg-offset-4">
+            <h1 class="project-name">Handleiding Magento 2</h1>
+            <a href="https://github.com/tig-nl/postnl-magento2/" class="btn" target="_blank">View on GitHub</a>
+            <a href="https://github.com/tig-nl/postnl-magento2/releases" class="btn" target="_blank">Release notes</a>
+            <a href="https://github.com/tig-nl/postnl-magento2/archive/refs/heads/master.zip" class="btn" target="_blank">Download .zip</a>
+            <div style="margin-top:10px">
+                <p>Op deze pagina vindt u de handleiding van de Magento 2 PostNL extensie. Voor meer informatie over foutcodes of veel gestelde vragen kunt u hierboven op de desbetreffende link klikken.</p>
+
+                <h1 id="1">1 Installatie van de extensie</h1>
+
+                <p>Voordat er gestart wordt met de installatie van de officiële PostNL Magento 2 extensie of het updaten daarvan adviseren wij altijd om eerst een backup te maken en de extensie eerst op een staging of testomgeving te installeren.</p>
+                <h2 id="1_1">1.1 Installatie met composer (aanbevolen)</h2>
+                <p>Wij adviseren net zoals Magento om de extensie te installeren middels composer. Log hiervoor in middels SSH op uw server en navigeer naar de Magento 2 installatie. Voer hier vervolgens de onder staande commando’s uit.</p>
+
+                <ol>
+                    <li>Installeer de extensie
+                        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>composer require tig/postnl-magento2
+</code></pre></div>    </div>
+                    </li>
+                    <li>PostNL Magento 2 extensie inschakelen
+                        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php bin/magento module:enable TIG_PostNL
+</code></pre></div>    </div>
+                    </li>
+                    <li>Update de Magento 2 omgeving
+                        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php bin/magento setup:upgrade
+</code></pre></div>    </div>
+                    </li>
+                    <li><span class="nice">Alleen productie modus</span> Wanneer de Magento 2 webshop in production mode draait, dan moet ook de static content opnieuw worden gedeployed:
+                        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php bin/magento setup:di:compile
+php bin/magento setup:static-content:deploy
+</code></pre></div>    </div>
+                    </li>
+                </ol>
+
+                <h2 id="1_2">1.2 Handmatige installatie</h2>
+
+                <p>Het is ook mogelijk om de extensie handmatig te installeren, doorloop daarvoor de volgende stappen:</p>
+
+                <ol>
+                    <li>Download de extensie direct vanuit de <a href="https://github.com/tig-nl/postnl-magento2" target="_blank">github repository</a> door op Code en dan Download ZIP te klikken.</li>
+                    <li>Maak een folder aan in de root folder waar de Magento installatie zich bevindt: <code class="language-plaintext highlighter-rouge">app/code/TIG/PostNL</code> (Hoofdlettergevoelig)</li>
+                    <li>De inhoud van de zip dient vervolgens in de folder <code class="language-plaintext highlighter-rouge">app/code/TIG/PostNL</code> geplaatst te worden</li>
+                    <li>PostNL Magento 2 extensie inschakelen
+                        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php bin/magento module:enable TIG_PostNL
+</code></pre></div>    </div>
+                    </li>
+                    <li>PostNL Magento 2 extensie inschakelen
+                        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php bin/magento setup:upgrade
+</code></pre></div>    </div>
+                    </li>
+                    <li><span class="nice">Alleen productie modus</span> Wanneer de Magento 2 webshop in production mode draait, dan moet ook de static content opnieuw worden gedeployed:
+                        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php bin/magento setup:di:compile
+php bin/magento setup:static-content:deploy
+</code></pre></div>    </div>
+                    </li>
+                </ol>
+
+                <h2 id="1_3">1.3 Extensie updaten</h2>
+
+                <p>Om de PostNL Magento 2 extensie te updaten dienen de volgende commando’s uitgevoerd te worden:</p>
+
+                <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>composer update tig/postnl-magento2
+php bin/magento setup:upgrade
+</code></pre></div></div>
+
+                <h2 id="1_4">1.4 Extensie deïnstalleren</h2>
+                <p>Om de PostNL Magento 2 extensie te deïnstalleren kan er gebruik gemaakt worden van de deïnstallatie commando’s die <a href="https://devdocs.magento.com/guides/v2.4/install-gde/install/cli/install-cli-uninstall-mods.html#instgde-cli-uninst-mod-uninst">Magento aanbiedt</a></p>
+
+                <p>De extensie maakt gebruik van deïnstallatiescripts. Voeg de <code class="language-plaintext highlighter-rouge">--remove-data</code> to aan het commando, het script zal dan vragen of order gerelateerde PostNL gegevens verwijderd dienen te worden. Het verwijderen van deze gegevens is optioneel. Het aanbevolen deïstallatiescript is als volgt:</p>
+                <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php bin/magento module:uninstall TIG_PostNL <span class="nt">--backup-db</span> <span class="nt">--remove-data</span> <span class="nt">--clear-static-content</span>
+</code></pre></div></div>
+
+                <h1 id="2">2 Algemene configuratie en accountinformatie</h1>
+                <p>Nadat de PostNL extensie is geïnstalleerd is deze in de backend van de Magento webshop terug te vinden onder <span class="nice">Winkels → Configuratie → Sales → PostNL</span>.</p>
+
+                <h2 id="2_1">2.1 Accountinstellingen</h2>
+                <p>Om gebruik te kunnen maken van de extensie dient u eerst de Accountinstellingen en het adres van de afzender in te stellen.</p>
+
+                <p><img src="media/2_algemene_configuratie.png" alt="Algemene configuratie" title="Magento 2 Admin"></p>
+
+                <p>De PostNL Magento 2 extensie kan in zowel de live modus als in de test modus draaien. De benodigde gegevens (Klantnummer, Klantcode, Api Key en BLS locatiecode) zijn terug te vinden in uw PostNL account. Indien u nog geen klant bent van PostNL dan kunt u zich <a href="https://www.postnl.nl/zakelijk/e-commerce/flexibele-bezorgopties">hier aanmelden</a>.
+                    Het aanvragen van een API key kan gedaan worden via MijnPostNL, doorloop hiervoor <a href="https://www.postnl.nl/Images/aanvragen-api-key-stappenkaart_tcm10-200445.pdf">deze stappenkaart</a>.</p>
+
+                <p>Nadat de gegevens ingevuld zijn, sla dan de configuratie op en klik op <span class="nice">Valideer API Gegevens</span>. Wanneer de gegevens correct zijn, dan verschijnt er een succes bericht.</p>
+
+                <p>Adres van de afzender
+                    Om de extensie te kunnen gebruiken is het noodzakelijke om een afzender adres in te voeren. De keuze voor het land zal invloed hebben op de verzendopties die er aangeboden kunnen worden binnen de webshop.</p>
+
+                <h1 id="3">3 Algemene instellingen</h1>
+                <p>Nadat de PostNL extensie is geïnstalleerd is deze in de backend van de Magento webshop terug te vinden onder <span class="nice">Winkels → Configuratie → Sales → PostNL</span>.</p>
+
+                <h2 id="3_1">3.1 Verzendinstellingen</h2>
+                <p>De <span class="nice">overkomstduur</span> is het aantal dagen dat de bestelling nodig heeft om bezorgd te worden nadat deze is geplaatst. In combinatie met de ingestelde <span class="nice">cut-off tijden</span> en de <span class="nice">verzenddagen</span> bepaald de extensie wanneer de klant de bestelling kan verwachten.
+                    <img src="media/3_verzend_instellingen.png" alt="Verzend instellingen" title="Magento 2 Admin - PostNL Verzenden"></p>
+
+                <h2 id="3_2">3.2 Bezorg instellingen</h2>
+
+                <h3 id="3_2_1">3.2.1 Avondbezorging</h3>
+                <p>Activeer avondbezorging om klanten de optie te bieden om hun pakket ‘s avonds bezorgd te krijgen. De extensie toont deze optie automatisch voor afleveradressen
+                    waar avondbezorging beschikbaar is.</p>
+
+                <p>Er kan een toeslag voor het gebruik van avondbezorging ingesteld worden, deze wordt opgeteld bij de verzendkosten. Deze toeslag moeten tussen de 0,00 en 2,00 EUR incl. BTW liggen. Laat dit veld leeg om geen toeslag in rekening te brengen voor het gebruik van avondbezorging.</p>
+
+                <p>Voor avondbezorging kan een alternatieve productoptie ingesteld worden, standaard staat deze op <code class="language-plaintext highlighter-rouge">Lever alleen aan opgegeven adres</code>.</p>
+
+                <p><a href="https://www.postnl.nl/zakelijke-oplossingen/webwinkels/bezorgopties-voor-mijn-klanten/avondbezorging/">https://www.postnl.nl/zakelijke-oplossingen/webwinkels/bezorgopties-voor-mijn-klanten/avondbezorging/</a></p>
+
+                <p><img src="media/3_bezorging_avondbezorging.png" alt="Avondbezorging" title="PostNL Avondbezorging"></p>
+
+                <h3 id="3_2_2">3.2.2 Zondag bezorging</h3>
+                <p>Activeer zondagbezorging om klanten de optie te bieden om hun bestelling op zondag te ontvangen. Na activatie zal zondagbezorging verschijnen als bezorgdag in de checkout.</p>
+
+                <p>Er kan voor zondag bezorging een toeslag ingesteld worden, deze wordt opgeteld bij de verzendkosten. Laat het veld leeg om geen toeslag in rekening te brengen.</p>
+
+                <p>Voor zondagbezorging kan een alternatieve productoptie ingesteld worden, standaard staat deze op <code class="language-plaintext highlighter-rouge">Lever alleen aan opgegeven adres</code>.</p>
+
+                <p><a href="https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/bezorgopties/zondagbezorging/">https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/bezorgopties/zondagbezorging/</a></p>
+
+                <p><img src="media/3_bezorging_zondagbezorging.png" alt="Zondagbezorging" title="PostNL Zondagbezorging"></p>
+
+                <h3 id="3_2_3">3.2.3 Bezorgdagen</h3>
+                <p>Activeer bezorgdagen om klanten de optie te bieden om zelf te kiezen wanneer de bestelling geleverd wordt. Het maximale aantal bezorgdagen dat kan worden weergegeven in de checkout is 14 dagen.</p>
+
+                <p><a href="https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/bezorgopties/keuze-bezorgdag/">https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/bezorgopties/keuze-bezorgdag/</a></p>
+
+                <p><img src="media/3_bezorging_bezorgdagen.png" alt="Bezorgdagen" title="PostNL Bezorgdagen"></p>
+
+                <h3 id="3_2_4">3.2.4 PostNL locaties</h3>
+                <p>Activeer PostNL Locaties om klanten de mogelijkheid te geven om bestellingen af te halen bij een zelf gekozen PostNL-punt.
+                    De PostNL locaties zijn beschikbaar voor Nederland en voor België en kunnen los van elkaar geactiveerd worden. Daarnaast kan er voor beide landen een standaard productoptie ingesteld worden die gebruikt moet worden voor overeenkomstige bestellingen.</p>
+
+                <p><a href="https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/bezorgopties/pakket-ophalen-bij-een-postnl-locatie/">https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/bezorgopties/pakket-ophalen-bij-een-postnl-locatie/</a></p>
+
+                <p><img src="media/3_bezorging_postnl_locaties.png" alt="PostNL Locaties" title="PostNL Locaties"></p>
+
+                <h3 id="3_2_5">3.2.5 Niet bij buren leveren</h3>
+                <p>Activeer deze optie om klanten de mogelijkheid te geven of de bestelling bij de buren bezorgd mag worden in het geval dat ze zelf niet thuis zijn.
+                    Wanneer een klant in de checkout aangeeft dat pakketten niet bij de buren bezorgd mogen worden, dan kan hiervoor een toeslag ingesteld worden in de backend en wordt opgeteld bij de verzendkosten. Laat het veld leeg om geen toeslag in rekening te brengen.</p>
+
+                <p>Er kan een standaard productoptie ingesteld voor verzendingen die niet bij buren geleverd mogen worden, standaard staat deze op <code class="language-plaintext highlighter-rouge">Lever alleen aan opgegeven adres</code>.</p>
+
+                <p><img src="media/3_bezorging_niet_bij_buren.png" alt="PostNL niet bij buren leveren" title="PostNL niet bij buren leveren"></p>
+
+                <h3 id="3_2_6">3.2.6 Voorraad instellingen</h3>
+                <p>Standaard worden de bezorgopties alleen weergegeven voor producten die op voorraad zijn, maar er kan ook gekozen worden om deze altijd weer te geven ongeacht de voorraad status.</p>
+
+                <p><img src="media/3_bezorging_voorraadinstellingen.png" alt="Voorraadinstellingen" title="PostNL Voorraadinstellingen"></p>
+
+                <h3 id="3_2_7">3.2.7 ID Check</h3>
+                <p>Activeer de ID check om bestelling te versturen met een leeftijdscheck.
+                    Voor deze bestellingen zal de pakketbezorger de leeftijd van de ontvanger van het pakket controleren.</p>
+
+                <p>Wanneer deze optie is geactiveerd en de configuratie is opgeslagen, dan verschijnen de ID check productopties in de dropdown met product opties.</p>
+
+                <p><img src="media/3_bezorging_id_check.png" alt="PostNL ID Check" title="PostNL ID Check"></p>
+
+                <h3 id="3_2_8">3.2.8 Cargo</h3>
+                <p>Met PostNL Cargo is het mogelijk om palletzendingen te versturen naar verschillende landen binnen Europa. Wanneer deze optie geactiveerd wordt, dan zullen er extra productopties beschikbaar gemaakt worden.</p>
+                <blockquote>
+                    <p><strong>Let op:</strong> Om gebruik te kunnen maken van PostNL Cargo dient u eerst uw PostNL Pakketten accountmanager te raadplegen.</p>
+                </blockquote>
+
+                <p><img src="media/3_bezorging_cargo.png" alt="PostNL Cargo" title="PostNL Cargo"></p>
+
+                <h3 id="3_2_9">3.2.9 Pakjes Tracked</h3>
+                <p>Met PostNL Pakjes Tracked kunnen kleine pakketten tot 2 kilo naar het buitenland verstuurd en gevolgd worden.
+                    Nadat u deze instelling heeft ingeschakeld kan de productoptie geselecteerd worden bij de standaard EPS bezorging en de standaard wereldwijde bezorging.</p>
+
+                <blockquote>
+                    <p><strong>Let op:</strong> sommige Pakjes Tracked producten vereisen specifieke contractuele afspraken met PostNL. Neem contact op met uw PostNL accountmanager voor meer informatie over deze producten.</p>
+                </blockquote>
+
+                <p><img src="media/3_bezorging_pakjes_tracked.png" alt="PostNL Pakjes Tracked" title="PostNL Pakjes Tracked"></p>
+
+                <h3 id="3_2_10">3.2.10 EU en België</h3>
+                <p>Voor bestellingen naar België en de EU kan standaard een specifieke product optie ingesteld. Om ook de EU business product opties terug te kunnen zien in de dropdown, dient de optie <span class="nice">Gebruik EU business</span> op “Ja” gezet te worden en daarna dient de configuratie opgeslagen te worden.</p>
+
+                <p>De standaard geselecteerde productoptie wordt automatisch als <span class="nice">Zending Type</span> ingesteld voor de overeenkomstige bestellingen.
+                    Bij het bestellingen overzicht zijn deze terug te vinden in de kolom <span class="nice">Zending Type</span>.</p>
+
+                <p><img src="media/3_bezorging_eu_belgie.png" alt="PostNL EU en België" title="PostNL EU en Belgie"></p>
+
+                <h3 id="3_2_11">3.2.11 Extra@Home</h3>
+                <p>Met PostNL Extra@Home is gericht op de bezorging van XL-producten ne smart home producten met een installatieservice.
+                    Voor de Extra@Home zendingen kan een standaard productoptie ingesteld worden.</p>
+
+                <p>Op productniveau kan er ingesteld worden welke producten verzonden moeten worden met de Extra@Home service.</p>
+
+                <blockquote>
+                    <p><strong>Let op:</strong> Om gebruik te kunnen maken van PostNL Extra@Home dient u eerst uw PostNL Pakketten accountmanager te raadplegen.</p>
+                </blockquote>
+
+                <p><img src="media/3_bezorging_extra@home.png" alt="PostNL Extra@Home" title="PostNL Extra@Home"></p>
+
+                <h3 id="3_2_12">3.2.12 Track and Trace</h3>
+                <p>Activeer Track and Trace voor uw klanten. Wanneer u track&amp;trace heeft geactiveerd, wordt er automatisch een Track and Trace mail voor de order gestuurd naar de klant.
+                    Voor de Track and Trace e-mails kunnen ook een BCC e-mails opgegeven worden, deze kunnen komma gescheiden ingevoerd worden.</p>
+
+                <p><img src="media/3_bezorging_track_trace.png" alt="PostNL Track and Trace" title="PostNL Track and Trace"></p>
+
+                <p>Er kan voor de Track en Trace e-mails ook nog een specifieke template ingesteld worden. Ga hiervoor naar <span class="nice">Marketing → Communications → Email Templates</span>.
+                    Klik op de “Add New Template” knop en selecteer onder <code class="language-plaintext highlighter-rouge">TIG_PostNL</code> de optie <code class="language-plaintext highlighter-rouge">Track and Trace</code> om er voor te zorgen dat de correcte content in uw eigen template komt te staan.</p>
+
+                <p><img src="media/3_bezorging_track_trace_template.png" alt="PostNL Track and Trace template" title="PostNL Track and Trace template"></p>
+
+                <p>Na het klikken op Load Template worden er in het veld Template Subject en Template Content automatisch de gegevens gevuld. Deze kunnen naar wens aangepast worden.
+                    Nadat de nieuwe template is opgeslagen zal deze ook geselecteerd kunnen worden bij de configuratie.</p>
+
+                <p><img src="media/3_bezorging_track_trace_template_selectie.png" alt="PostNL Track and Trace template selectie" title="PostNL Track and Trace template selectie"></p>
+
+                <h3 id="3_2_13">3.2.13 Brievenbuspakje</h3>
+                <p>Activeer brievenbuspakje om de optie te hebben om kleine artikelen te versturen in een brievenbuspakje die eenvoudig door de brievenbus past
+                    <a href="https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/verzendopties/brievenbuspakje/">https://www.postnl.nl/zakelijke-oplossingen/pakket-versturen/verzendopties/brievenbuspakje/</a></p>
+
+                <p>Binnen de extensie zijn er twee opties om gebruik te maken van brievenbuspakjes:</p>
+                <ul>
+                    <li><strong>Automatisch:</strong> De extensie bepaalt automatisch of een bestelling als brievenbuspakje wordt verzonden.</li>
+                    <li><strong>Handmatig:</strong> U bepaalt in de backend handmatig of een bestelling als brievenbuspakje wordt verzonden.</li>
+                </ul>
+
+                <p><img src="media/3_bezorging_brievenbuspakje.png" alt="PostNL Brievenbuspakje" title="PostNL Brievenbuspakje"></p>
+
+                <p><strong>Automatisch</strong></p>
+
+                <p>Om een pakketje automatisch als brievenbuspakje te markeren zijn een paar punten belangrijk:</p>
+
+                <ul>
+                    <li>Bij de producten dient het gewicht correct ingesteld te zijn, het maximale gewicht van een brievenbuspakje is 2 kg.</li>
+                    <li>Bij de producten moet onder de tab PostNL <code class="language-plaintext highlighter-rouge">Soort</code> op <span class="nice">Brievenbuspakje</span> gezet worden en de <code class="language-plaintext highlighter-rouge">Maximale hoeveelheid Brievenbuspakje</code> moet ingesteld zijn.</li>
+                </ul>
+
+                <p><img src="media/3_bezorging_brievenbuspakje_productinstellingen.png" alt="PostNL Brievenbuspakje productinstellingen" title="PostNL Brievenbuspakje productinstellingen"></p>
+
+                <p><strong>Handmatig</strong></p>
+
+                <p>Bij de handmatige optie kan een bestelling op twee plaatsen aangemerkt worden als brievenbuspakje:</p>
+                <ul>
+                    <li><strong>Bestellingen overzicht:</strong> In het bestellingen overzicht kunt u van één of meerdere bestellingen de verzendoptie wijzigen. Selecteer de bestellingen waarvan u de verzendoptie wil wijzigen, selecteer in de PostNL actiebalk ‘Verander productcode’ en selecteer vervolgens de bezorgoptie <span class="nice">Brievenbuspakje Extra</span>.</li>
+                    <li><strong>Per bestelling:</strong> Open hiervoor vanuit het bestellingen overzicht een bestelling en klik op de optie om de bestelling te versturen. Onderaan de pagina kan er vervolgens bij de Verzending opties een <span class="nice">PostNL Bezorgoptie</span> geselecteerd worden. Kies in dit geval voor <span class="nice">Brievenbuspakje Extra</span>.
+                        <img src="media/3_bezorging_brievenbuspakje_verzenden.png" alt="PostNL Brievenbuspakje verzenden" title="PostNL Brievenbuspakje verzenden"></li>
+                </ul>
+
+                <h2 id="3_3">3.3 Retour instellingen</h2>
+                <p>Retouren zijn beschikbaar voor Nederland en België. Na activatie dient het retouradres ingevuld te worden, waarbij het land afhankelijk is van het gekozen verzendland.
+                    De extensie voegt na de activatie automatisch retourlabels toe bij het printen van de labels voor Nederland / België.</p>
+
+                <blockquote>
+                    <p>Om retourlabels te kunnen laten generen is een antwoordnummer en een apart klantnummer nodig. Hiervoor kan contact opgenomen met uw accountmanager of het kan <a href="https://www.postnl.nl/zakelijke-oplossingen/ontvangen/antwoordnummer/">hier</a> aangevraagd worden.</p>
+                </blockquote>
+
+                <p><img src="media/3_retour_instellingen.png" alt="Retour instellingen" title="Magento 2 Admin - PostNL Retouren"></p>
+
+                <h1 id="4">4 Wereldwijd verzenden</h1>
+
+                <p>Activeer wereldwijd verzenden voor uw klanten om bestellingen met PostNL te kunnen versturen naar landen <code class="language-plaintext highlighter-rouge">buiten de EU</code>, hiervoor wordt gebruik gemaakt van het PostNL’s <span class="nice">GlobalPack</span> product.</p>
+
+                <p>GlobalPack kan geactiveerd worden met de gegevens die ontvangen zijn vanuit PostNL.</p>
+
+                <p><a href="https://www.postnl.nl/versturen/pakket-versturen/pakket-buitenland/">https://www.postnl.nl/versturen/pakket-versturen/pakket-buitenland/</a></p>
+
+                <p>De instellingen voor wereldwijd verzenden staan onder: <span class="nice">Stores → Configuration → Sales → PostNL</span>, de instellingen staan onder <span class="nice">Wereldwijd verzenden</span>. Wereldwijd verzenden kan hier geactiveerd worden en de standaard productoptie voor GlobalPack kan hier ingesteld worden.</p>
+
+                <p><img src="media/4_wereldwijd_verzenden.png" alt="Wereldwijde verzending instellingen" title="Magento 2 Admin - PostNL Wereldwijd"></p>
+
+                <h2 id="4_1">4.1 Barcode instellingen</h2>
+                <p>Onder het kopje barcode instellingen moet het barcode type (bestaande uit twee letters) en de barcode range (bestaande uit 4 cijfers) ingevuld worden zoals deze door PostNL is aangeleverd. Ontbreekt deze informatie, neem dan contact op met de PostNL account manager.</p>
+
+                <p><img src="media/4_wereldwijd_barcode.png" alt="Wereldwijde verzending barcode" title="Magento 2 Admin - PostNL Wereldwijd Barcode"></p>
+
+                <h2 id="4_2">4.2 Douane instellingen</h2>
+                <p>Bij de douane instellingen kan het licentienummer en certificaatnummer ingevuld worden (indien u daarover beschikt) en er kan een standaard verzendtype worden geselecteerd.</p>
+
+                <p>Onder de douane instellingen is de mogelijkheid om <span class="nice">productattributen en sortering</span> opties in te stellen.
+                    Hier kan aangegeven worden of er gebruik gemaakt moet worden van een HS tarief, opties voor productbeschrijving, land van herkomst en op welke manier de producten gesorteerd dienen te worden.</p>
+
+                <ul>
+                    <li>Stel bij de <span class="nice">Douane waarde</span> het attribuut in wat gebruikt moet worden om de waarde van het product te bepalen.</li>
+                    <li>Stel bij <span class="nice">Land van herkomst</span> het attribuut in dat gebruikt moet worden om het land van herkomst van het product te bepalen.</li>
+                    <li>Stel bij <span class="nice">Productomschrijving</span> het attribuut in dat gebruikt moet worden voor de productomschrijving.</li>
+                    <li>Met het <span class="nice">Product sortering attribuut</span> kan aangegeven worden op basis van welke waarde de producten gesorteerd moeten worden.</li>
+                    <li>Bij de <span class="nice">Product sortering richting</span> kan aangegeven worden of de producten op oplopende of aflopende volgorde worden gesorteerd moeten worden.</li>
+                </ul>
+
+                <p><img src="media/4_wereldwijd_douane.png" alt="Wereldwijde verzending douane" title="Magento 2 Admin - PostNL Wereldwijd Douane"></p>
+
+                <h1 id="5">5 Extra instellingen</h1>
+
+                <h2 id="5_1">5.1 Printerinstellingen</h2>
+                <p>Onder de printerinstellingen kan het formaat van de labels ingesteld worden, waarbij er gekozen kan worden tussen A4 en A6.
+                    Daarnaast kan er gekozen worden om de pdf direct te downloaden of om deze in een nieuw venster te openen.
+                    <img src="media/5_extra_printer.png" alt="Printerinstellingen" title="PostNL Magento 2 printerinstellingen"></p>
+
+                <h2 id="5_2">5.2 Label- en packingslip opties</h2>
+                <p>Binnen de PostNL extensie is er de opties om labels te printen of of pakbonnen te printen. Voor beide opties zijn er configuraties beschikbaar.</p>
+
+                <p>Op de labels verschijnt linksboven een referentie, hierbij kan er gekozen worden om hiervoor geen waarde, zending ID, bestelling ID of een eigen waarde weer te geven.
+                    Bij deze laatste optie kan bijvoorbeeld een voorvoegsel toegevoegd worden aan het zending ID.
+                    Hiervoor kunnen de volgende variabelen gebruikt worden: <code class="language-plaintext highlighter-rouge">{{var shipment_increment_id}}</code>, <code class="language-plaintext highlighter-rouge">{{var order_increment_id}}</code> en <code class="language-plaintext highlighter-rouge">{{var store_frontend_name}}</code>.
+                    De uiteindelijke tekst mag niet meer zijn dan 28 karakters.</p>
+
+                <p>Standaard wordt het aantal pakketten berekend op het gewicht, waarbij 20kg als maximaal gewicht wordt genomen.
+                    Bij bestellingen die boven dit gewicht uitkomen, zal er voor ieder pakket een los label worden geprint.
+                    Er kan ook worden gekozen om het op basis van een vooraf gedefinieerd aantal pakketten te doen.</p>
+
+                <p><img src="media/5_extra_label_packingslip.png" alt="Label en pakbon instellingen" title="PostNL Magento 2 label en pakbon instellingen"></p>
+
+                <h3 id="5_2_1">5.2.1 Barcode-instellingen</h3>
+                <p>Op de pakbonnen kan een barcode geprint worden, na het scannen zal deze de bijpassende order erbij zoeken in het order grid.
+                    Standaard wordt de barcode rechtsboven op de pakbon geprint, deze positie kan naar wens aangepast worden op basis van coördinaten op de PDF.</p>
+
+                <p>Voor de barcode kan er gekozen worden uit diverse type barcodes te weten <span class="nice">Code 25</span>, <span class="nice">Code 39</span>, <span class="nice">Code 128</span>, <span class="nice">Royal Mail</span>.
+                    <img src="media/5_extra_barcode_pakbon.png" alt="Barcode pakbon" title="PostNL Magento 2 barcode pakbon"></p>
+
+                <h2 id="5_3">5.3 Adresvalidatie</h2>
+                <p>De adresvalidatie is opgesplitst in de postcode check (Nederlandse adresvalidatie) en de internationale adresvalidatie.</p>
+
+                <h3 id="5_3_1">5.3.1 Postcode check</h3>
+                <p>Bij de Nederlandse adresvalidatie wordt op basis van de ingevoerde postcode en huisnummer, automatisch de straatnaam en de plaatsnaam ingeladen.</p>
+
+                <p><img src="media/5_extra_adresvalidatie_front.png" alt="Nederlandse adresvalidatie in de frontend" title="PostNL Magento 2 adresvalidatie checkout"></p>
+
+                <p>Binnen de instellingen kan worden aangegeven of het design van de webshop is gebaseerd op het Magento Blank of het Magento Luma thema, om zo de best passende styling te verzorgen.
+                    <img src="media/5_extra_adresvalidatie.png" alt="Instellingen Nederlandse adresvalidatie" title="PostNL Magento 2 adresvalidatie"></p>
+
+                <h3 id="5_3_2">5.3.2 Internationale adresvalidatie</h3>
+                <p>De internationale adresvalidatie kan geactiveerd worden door de optie <code class="language-plaintext highlighter-rouge">Internationale Adresvalidatie Inschakelen</code> op <code class="language-plaintext highlighter-rouge">Ja</code> te zetten. Om gebruik te kunnen maken van deze service dient uw API-key geldig te zijn voor deze dienst, nadat de configuratie is opgeslagen kan dit eenvoudig gevalideerd worden.</p>
+
+                <p><img src="media/5_extra_internationale_adresvalidatie.png" alt="Internationale adresvalidatie" title="PostNL Magento 2 adresvalidatie"></p>
+
+                <p>Is de API-Key niet geldig voor Internationale Adres Validatie? Stuur een verzoek om uw API-key geldig te maken voor deze dienst naar <a href="mailto:DataSolutions@postnl.nl">DataSolutions@postnl.nl</a> met de volgende gegevens:</p>
+                <ul>
+                    <li>Voornaam:</li>
+                    <li>Achternaam:</li>
+                    <li>Bedrijfsnaam:</li>
+                    <li>KvK-nummer:</li>
+                    <li>Email adres:</li>
+                    <li>PostNL Klantnummer:</li>
+                    <li>Opmerking: (geef hier aan dat u de Internationale Adres Validatie wilt gebruiken in Magento 2)</li>
+                </ul>
+
+                <blockquote>
+                    <p><strong>Let op:</strong> deze dienst kan extra kosten met zich meebrengen als u veel Internationale adressen valideert.</p>
+                </blockquote>
+
+                <p>In de checkout van de webshop zal er onderin een kopje verschijnen met <code class="language-plaintext highlighter-rouge">adres validatie</code> waarbij wordt aangegeven of het adres correct is of niet. Mocht het adres niet valide zijn, dan worden er suggesties gegeven voor het correcte adres.
+                    <img src="media/5_extra_internationale_adresvalidatie_front.png" alt="Internationale adresvalidatie front" title="PostNL Magento 2 adresvalidatie front"></p>
+
+                <h2 id="5_4">5.4 Geavanceerde instellingen</h2>
+                <p>Onder de geavanceerde instellingen kan worden aangegeven welke verzendmethoden gebruikt worden voor PostNL zendingen. De bestellingen die middels deze verzendmethoden worden aangemaakt, worden verwerkt door de PostNL extensie.
+                    <img src="media/5_extra_geavanceerd.png" alt="Logging" title="PostNL Magento 2 geavanceerde instellingen">
+                    Door de toolbar te activeren komen er extra opties in het bestellingen en verzendingen overzicht, waarmee onder andere de productcode of het aantal pakketten van een order aangepast kan worden.
+                    <img src="media/5_extra_geavanceerd_toolbar.png" alt="Logging" title="PostNL Magento 2 geavanceerde instellingen"></p>
+
+                <h1 id="6">6 Ontwikkelaar instellingen</h1>
+
+                <h2 id="6_1">6.1 Logging</h2>
+                <p>Er zijn een aantal verschillende eigenschappen die meegegeven kunnen worden in de logging. Dit kan handig zijn als er een probleem met de extensie onderzocht moet worden.</p>
+
+                <blockquote>
+                    <p>De log bestanden zijn op de server terug te vinden in de folder <span class="nice">var/log/PostNL</span>. Wanneer u zelf niet bij deze bestanden, raadpleeg dan uw ontwikkelpartij.</p>
+                </blockquote>
+
+                <p>De logging instellingen zijn terug te vinden via <span class="nice">Stores → Configuration → Sales → PostNL → Logging</span>.</p>
+
+                <p><strong>DEBUG:</strong> Uitgebreide debug informatie.</p>
+
+                <p><strong>INFO:</strong> Interessante gebeurtenissen die plaatsvinden.</p>
+
+                <p><strong>NOTICE:</strong> Normale, maar belangrijke processen.</p>
+
+                <p><strong>WARNING:</strong> Uitzonderlijke voorvallen wat geen errors zijn.</p>
+
+                <p><strong>ERROR:</strong> Foutmeldingen die niet direct verholpen dienen te worden, maar wel gemonitord/gelogd blijven worden.</p>
+
+                <p><strong>CRITICAL:</strong> Kritische fouten.</p>
+                <blockquote>
+                    <p>Bijvoorbeeld: Onderdeel van een extensie is onbeschikbaar.</p>
+                </blockquote>
+
+                <p><strong>ALERT:</strong> Er dient direct actie ondernomen te worden.</p>
+                <blockquote>
+                    <p>Bijvoorbeeld: Website is down of database is onbereikbaar.</p>
+                </blockquote>
+
+                <p><strong>EMERGENCY:</strong> Systeem is onbruikbaar.</p>
+
+                <p><img src="media/6_logging.png" alt="Logging" title="PostNL Magento 2 logging"></p>
+
+                <h1 id="7">7 Zendingen aanmaken</h1>
+                <p>Binnen de plugin zijn er twee manieren om zendingen aan te maken voor PostNL, dit kan in batch of per order.</p>
+
+                <h2 id="7_1">7.1 Batch zendingen aanmaken</h2>
+                <p>Zendingen per batch aanmaken is sneller dan handmatig zendingen aanmaken, maar er kunnen dan geen uitzonderingen gemaakt worden per bestelling op de PostNL producten die gebruikt moeten worden.</p>
+
+                <ol>
+                    <li>Ga naar het “Verkoop &gt; Bestellingen”.</li>
+                    <li>Selecteer de orders die u wilt verzenden. Dit kan per batch vorm door ze links aan te vinken. Dit kan uitsluitend met zendingen die via PostNL Checkout, de verzendmethode PostNL of een gekoppelde verzendmethode zijn aangemaakt.</li>
+                    <li>Kies in de dropdown voor één van de volgende opties <code class="language-plaintext highlighter-rouge">PostNL &gt; Maak zendingen aan</code>, <code class="language-plaintext highlighter-rouge">PostNL &gt; Maak zendingen aan, print labels &amp; meld voor</code>, <code class="language-plaintext highlighter-rouge">PostNL &gt; Maak zendingen aan &amp; print pakbonnen</code>, <code class="language-plaintext highlighter-rouge">PostNL &gt; Maak zendingen aan, print pakbonnen &amp; meld voor</code>.</li>
+                </ol>
+
+                <p><img src="media/7_zending_aanmaken_batch.png" alt="Zendingen aanmaken in batch" title="PostNL Magento 2 zendingen aanmaken in batch"></p>
+
+                <p>Bij de opties <code class="language-plaintext highlighter-rouge">PostNL &gt; Maak zendingen aan</code> moeten de zendingen later nog voorgemeld worden. Ga hiervoor naar <code class="language-plaintext highlighter-rouge">Verkoop &gt; Zendingen</code> en selecteer de zendingen die voorgemeld moeten worden.
+                    Kies vervolgens in de dropdown voor <code class="language-plaintext highlighter-rouge">PostNL - Print verzendlabels &amp; zending voormelden</code>.</p>
+
+                <h2 id="7_2">7.2 Per order zendingen aanmaken</h2>
+                <p>Volg de onderstaande stappen om per order zendingen aan te maken. Via deze weg kunt u alternatieve PostNL producten gebruiken.</p>
+
+                <ol>
+                    <li>Ga naar “Verkoop &gt; Bestellingen”.</li>
+                    <li>Open de order die u wilt verzenden en druk vervolgens op <code class="language-plaintext highlighter-rouge">Verzend</code> rechtsboven in het scherm.</li>
+                    <li>Onderaan de pagina kunt u de zending bevestigen. Daar kunt u tevens afwijken van het standaard aantal colli en de verzendoptie. Klik op de button Verstuur.</li>
+                </ol>
+
+                <p><img src="media/7_zending_aanmaken_handmatig.png" alt="Zendingen aanmaken per order" title="PostNL Magento 2 zendingen aanmaken per order"></p>
+
+                <p>U kunt het aantal colli ook wijzigen nadat er een Magento zending is aangemaakt mits u nog niet heeft voorgemeld. Dit kan in het Magento zendingen detail scherm.</p>
+
+                <h2 id="7_3">7.3 Productcode wijzigen</h2>
+                <p>Via het orderoverzicht is het mogelijk om de productcode te wijzigen. Dit kan gedaan als volgt gedaan worden:</p>
+                <ol>
+                    <li>Selecteer de orders waarvan de productcode aangepast moet worden</li>
+                    <li>Selecteer PostNL toolbar de optie <span class="nice">Verander productcode</span> en vervolgens de gewenste productcode.</li>
+                    <li>Klik op <code class="language-plaintext highlighter-rouge">Submit</code> om de wijziging door te voeren.</li>
+                </ol>
+
+                <p><img src="media/7_zending_aanmaken_wijzigen_productcode.png" alt="Zendingen aanmaken productcode wijzigen" title="PostNL Magento 2 zendingen aanmaken productcode wijzigen"></p>
+
+                <h2 id="7_4">7.4 Colli wijzigen</h2>
+                <p>Via het orderoverzicht is het mogelijk om het aantal colli te wijzigen. Dit kan gedaan als volgt gedaan worden:</p>
+                <ol>
+                    <li>Selecteer de orders waarvan de colli aangepast moet worden</li>
+                    <li>Selecteer PostNL toolbar de optie <span class="nice">Verander parcel count</span> en stel het gewenste aantal colli in.</li>
+                    <li>Klik op <code class="language-plaintext highlighter-rouge">Submit</code> om de wijziging door te voeren.</li>
+                </ol>
+
+                <p><img src="media/7_zending_aanmaken_wijzigen_colli.png" alt="Zendingen aanmaken productcode wijzigen" title="PostNL Magento 2 zendingen aanmaken productcode wijzigen"></p>
+
+                <h1 id="8">8 Verzendmethode instellen</h1>
+                <p>Onderdeel van de PostNL extensie is de PostNL verzendmethode waarin de verzendkosten bepaald kunnen worden. De basis van de verzendmethode is vergelijkbaar met andere Magento verzendmethodes met daarin de opties om de verzendmethode te activeren, tarieven, verzendlanden en de titel in te stellen.
+                    Voor het instellen van de tarieven zijn er binnen de PostNl verzendmethode drie opties: <span class="nice">vast tarief</span>, <span class="nice">table rates</span> en de <span class="nice">matrix rates</span>.</p>
+                <h2 id="8_1">8.1 Vast tarief</h2>
+                <p>Bij de optie vast tarief kan er één tarief ingesteld worden wat gehanteerd als verzendkosten naar alle landen die geactiveerd staan.</p>
+
+                <h2 id="8_2">8.2 Table rates</h2>
+                <p>De table rates verzendmethode komt overeen met de gelijknamige verzendmethode van Magento: <a href="https://docs.magento.com/user-guide/shipping/shipping-table-rate.html">https://docs.magento.com/user-guide/shipping/shipping-table-rate.html</a>.</p>
+
+                <p>Bij de table rates kunnen de verzendkosten bepaald worden op basis van twee variabele en daarin zijn de volgende 3 combinaties mogelijk:</p>
+                <ul>
+                    <li>Prijs versus bestemming</li>
+                    <li>Gewicht versus bestemming</li>
+                    <li>Aantal artikelen versus bestemming</li>
+                </ul>
+
+                <p>De tarieven kunnen vervolgens met behulp van een csv geupload worden. Voor het uploaden van de csv dient er geswitched te worden naar de website scope. Deze optie staat links boven in de configuratie van Magento:
+                    <img src="media/8_verzendmethode_table.png" alt="PostNL Table Rates" title="PostNL Magento 2 table rates"></p>
+
+                <h3 id="8_2_1">8.2.1 Prijs versus bestemming</h3>
+                <p>Bij deze optie wordt het verzendtarief bepaald op basis van het subtotaal en de verzendlocatie. Op deze manier er per land een ander tarief worden gehanteerd en boven een bepaald bedrag is het mogelijk om bijvoorbeeld het verzenden gratis te maken.
+                    Zie ook deze <a href="media/tablerates-postnl-prijs.csv">voorbeeld csv</a>.</p>
+
+                <h3 id="8_2_2">8.2.2 Gewicht versus bestemming</h3>
+                <p>Bij deze optie wordt de verzendtarief bepaald op basis van het gewicht en de verzendlocatie. Op deze manier er per land een ander tarief worden gehanteerd en boven een bepaald gewicht is het mogelijk om een hoger tarief in rekening te brengen.
+                    Zie ook deze <a href="media/tablerates-postnl-gewicht.csv">voorbeeld csv</a>.</p>
+
+                <h3 id="8_2_3">8.2.3 Aantal artikelen versus bestemming</h3>
+                <p>Bij deze optie wordt de verzendtarief bepaald op basis van het aantal artikelen en de verzendlocatie. Op deze manier er per land een ander tarief worden gehanteerd en boven een bepaald aantal artikelen is het mogelijk om een hoger tarief in rekening te brengen.
+                    Zie ook deze <a href="media/tablerates-postnl-aantal.csv">voorbeeld csv</a>.</p>
+
+                <h2 id="8_3">8.3 Matrix rates</h2>
+                <p>Met behulp van de matrix rates kunnen de verzendkosten bepaald worden op basis van een combinatie van de bestemming, het gewicht, aantal artikelen, de prijs en het pakkettype, wat veel flexibiliteit geeft in het instellen van de verzenkosten.
+                    Wanneer het <code class="language-plaintext highlighter-rouge">Rate type</code> ingesteld staat op Matrix, dan verschijnt de optie om de Matrix rate te importeren of om de huidige versie te downloaden</p>
+
+                <p><img src="media/8_verzendmethode_matrix_csv.png" alt="PostNL Matrix Rates" title="PostNL Magento 2 Matrix rates"></p>
+
+                <blockquote>
+                    <p><strong>BELANGRIJK:</strong> Zet altijd de regel voor het hoogste bedrag/gewicht bovenaan. Het systeem kijkt namelijk eerst naar de bovenste regel en kijkt daarna naar de daarop volgende regel.
+                        Als de regel voor verzendkosten bij een bedrag van 0 of hoger boven de regel staat van 100 of hoger, dan zal de regel van 0 of hoger altijd als eerste gebruikt worden omdat deze bovenaan staat.</p>
+                </blockquote>
+
+                <p>De eerste rij in de csv bevat altijd de namen van de kolommen die gebruikt worden voor de bepaling van de verzendkosten.</p>
+                <ul>
+                    <li><strong>Land:</strong> De landcode waarvoor de verzendkosten gelden.</li>
+                    <li><strong>Provincie/staat:</strong> De provincie/staat binnen een land waarvoor de verzendkosten gelden.</li>
+                    <li><strong>Postcode:</strong> De postcode waarvoor de verzendkosten gelden.</li>
+                    <li><strong>Gewicht (en hoger):</strong> De verzendkosten bepalen op basis van een bepaald gewicht.</li>
+                    <li><strong>Bedrag (en hoger):</strong> De verzendkosten bepalen op basis van een bepaald orderbedrag.</li>
+                    <li><strong>Hoeveelheid (en hoger):</strong> De verzendkosten bepalen op basis van het aantal artikelen in een order.</li>
+                    <li><strong>Pakkettype:</strong> Het pakkettype waarvoor de verzendkosten gelden (pakjegemak, regular).</li>
+                    <li><strong>Prijs:</strong> De verzendkosten die gerekend worden zodra de order aan de bepaalde instellingen voldoet.</li>
+                    <li><strong>Instructies:</strong> Instructies voor intern gebruik.</li>
+                </ul>
+
+                <p>Zie ook deze <a href="media/matrix-rates-postnl.csv">voorbeeld csv</a>.</p>
+
+                <h3 id="8_3_1">8.3.1 Visuele matrix</h3>
+                <p>Naast de optie om de matrix middels een csv te uploaden is er ook de optie om dit in te voeren middels de visuele matrix. Er zijn twee manieren om naar de visuele matrix te gaan:</p>
+                <ol>
+                    <li>Klik in de backend in het linkermenu op PostNL en klik vervolgens op matrix rates</li>
+                    <li>Ga in de backend naar Systeem &gt; Configuratie &gt; Verzendmethodes &gt; PostNL, zet de Rate Type op Matrix en klik op “Toon visuele matrix”.</li>
+                </ol>
+
+                <p><img src="media/8_verzendmethode_matrix_visueel.png" alt="PostNL Matrix Rates Visueel" title="PostNL Magento 2 Matrix rates visueel"></p>
+
+                <p>Hierin ziet u de huidige matrix rates die al eerder ingesteld zijn, daarnaast kunt u hier ook nieuwe matrix rates toevoegen. Klik hiervoor rechtsboven op “Voeg een nieuwe matrix toe”.
+                    <img src="media/8_verzendmethode_matrix_grid.png" alt="PostNL Matrix Rates Grid" title="PostNL Magento 2 Matrix rates grid"></p>
+
+                <p>Vervolgens vult u de gegevens in:
+                    <img src="media/8_verzendmethode_matrix_add.png" alt="PostNL Matrix Rates Add" title="PostNL Magento 2 Matrix rates add"></p>
+
+                <ul>
+                    <li><strong>Website:</strong> De website Scope waar de desbetreffende matrix voor zal gelden</li>
+                    <li><strong>Land:</strong> Selecteer de landen waarvoor dit tarief geldt. Houdt “ctrl” ingedrukt en klik op de gewenste landen.</li>
+                    <li><strong>Postcode:</strong> De postcode waarvoor het verzendtarief geldt. Vul een ‘*’ als dit tarief geldt voor alle postcodes. Geldt dit tarief niet voor alle postcodes? Voer dan maximaal 1 postcode per keer in.</li>
+                    <li><strong>Minimale gewicht (en hoger):</strong> Dit verzendtarief geldt voor bestellingen van minimaal dit gewicht. Let op, gebruik ‘.’ (PUNT) i.p.v. ‘,’ (KOMMA).</li>
+                    <li><strong>Minimaleedrag (en hoger):</strong> Dit verzendtarief geldt voor bestellingen van minimaal dit bedrag. Gebruik een ‘.’ (PUNT) in plaats van een ‘,’ (KOMMA).</li>
+                    <li><strong>Minimale bestel hoeveelheid (en hoger):</strong> Dit verzendtarief geldt vanaf minimaal deze hoeveelheid producten.</li>
+                    <li><strong>Pakkettype:</strong> Alle pakket types, Regulier, Afhalen PostNL punt, Brievenbuspakje of Extra@Home.</li>
+                    <li><strong>Prijs:</strong> De verzendkosten die gerekend worden zodra de order aan bovenstaande instellingen voldoet.</li>
+                </ul>
+
+                <p>Bij <code class="language-plaintext highlighter-rouge">Land</code> kunt u meerdere landen selecteren. Na het opslaan zal elk land een eigen regel
+                    krijgen. Mocht u een regel willen wijzigen dan zult u eerst de regel moeten verwijderen en
+                    dan weer opnieuw moeten toevoegen.</p>
+
+                <h1 id="9">9 Productinstellingen</h1>
+                <p>Binnen de PostNL extensie is het mogelijk om op productniveau specifieke instellingen te maken die alleen voor dat product van toepassing zijn. Standaard verschijnen deze opties in een losse tab in de backend wanneer een product wordt geopend.
+                    <img src="media/9_productinstellingen.png" alt="Productinstellingen" title="PostNL Magento 2 productinstellingen"></p>
+
+                <p>Per product kan er worden aangegeven wat voor een soort product het is, standaard worden deze op <code class="language-plaintext highlighter-rouge">normaal</code> gezet. Voor de opties <code class="language-plaintext highlighter-rouge">Brievenbuspakje</code> en ` Extra@Home` zijn aanvullende instellingen mogelijk.</p>
+
+                <p>Voor Extra@Home kan het pakket aantal ingesteld worden om het aantal colli te berekenen. Daarnaast moet er voor Extra@Home ook het volume in kubieke centimeters opgegeven worden. Deze instellingen worden alleen gebruikt wanneer er sprake is van een Extra@Home verzending.</p>
+
+                <p>Bij brievenbuspakje kan de maximale hoeveelheid per brievenbuspakje ingesteld worden om te bepalen of een pakketje als brievenbuspakje verstuurd kan worden.
+                    Ter voorbeeld: wanneer de maximale hoeveelheid op 4 wordt gezet voor product A en 2 voor product B, dan kan een consument product A 2x en product B 1x kopen en zal dat als brievenbuspakje worden verzonden. Wordt dit aantal overtroffen, dan zal het als een standaard verzending worden gezien.</p>
+
+                <p>Per product kan ook een aparte overkomstduur worden ingesteld. Wanneer er in de winkelwagen producten zitten met een verschillende overkomstduur, dan wordt er gekeken naar de langste overkomstduur.
+                    Tot slot kan er nog per product aangegeven worden of de bezorgdagen weergegeven moeten worden, wanneer een product met deze instelling in de winkelwagen zit dan worden er geen bezorgdagen weergegeven ongeacht de andere producten in de winkelwagen.</p>
+                <h1 id="foutcodes">Foutcodes</h1>
+
+                <h2 id="foutcodes_POSTNL-0010">[POSTNL-0010] Er is een fout opgetreden tijdens het verwerken van deze actie</h2>
+                <h3>Probleem</h3>
+                <p>In de backend is de volgende melding zichtbaar: “An error occurred while processing this action.” of “Een fout is opgetreden tijdens het verwerken van deze actie.”.</p>
+                <h3>Oplossing</h3>
+                <p>Kijk in de log bestanden (var/log/PostNL/) voor meer informatie.<br>
+                    De Magento en PostNL logging dienen aan te staan vóór het optreden van de fout om deze fout terug te kunnen vinden in de logs.</p>
+                <p>De Magento logging kan geactiveerd worden onder <span class="nice">Stores &gt; Configuration &gt; Sales &gt; PostNL &gt; Ontwikkelaarsinstellingen &gt; Logging.</span></p>
+
+                <h2 id="foutcodes_POSTNL-0061">[POSTNL-0061] Onjuist barcodetype</h2>
+                <h3>Probleem</h3>
+                <p>Bij het opvragen van de Barcodetype, wordt een type opgevraagd die niet bestaat of onjuist is.</p>
+                <h3 id="oplossing">Oplossing</h3>
+                <p>Dit wijst op een probleem in de code of database. Neem contact op met je technisch beheerder.</p>
+
+                <h2 id="foutcodes_POSTNL-0070">[POSTNL-0070] Mislukt om barcode aan te maken voor verzending</h2>
+                <h3>Probleem</h3>
+                <p>Het is momenteel niet mogelijk om voor deze zending een barcode op te vragen</p>
+                <h3>Oplossing</h3>
+                <p>Dit kan onder andere voorkomen wanneer de zending al een barcode heeft.</p>
+
+                <h2 id="foutcodes_POSTNL-0124">[POSTNL-0124] Invalid arguments supplied. GetDeliveryTimeframes requires a postcode and a housenumber.</h2>
+                <h3>Probleem</h3>
+                <p>Invalid arguments supplied. GetDeliveryTimeframes requires a postcode and a housenumber.</p>
+                <h3>Oplossing</h3>
+                <p>Neem contact op met de digitale klant support, stuur daarvoor een e-mail naar <a href="mailto:digitaleklantsupport@postnl.nl">digitaleklantsupport@postnl.nl</a> of bel met PostNL op telefoonnummer 088-2255651.</p>
+
+                <h2 id="foutcodes_POSTNL-0194">[POSTNL-0194] Invalid PostNL Matrix Rates File Format</h2>
+                <h3>Probleem</h3>
+                <p>U krijgt in het PostNL tarieven scherm de onderstaande melding:</p>
+                <p><em>Invalid PostNL Matrix Rates File Format</em></p>
+                <h3>Oorzaak/Oplossing:</h3>
+                <p>Het PostNL tarieven csv bestand heeft niet het juiste formaat. Zorg ervoor dat het csv bestand komma-gescheiden is en alle kolommen bevat (zijn er 8).</p>
+
+                <h2 id="foutcodes_POSTNL-0196">[POSTNL-0196] File has not been imported. See the following list of errors</h2>
+                <h3>Probleem</h3>
+                <p>U krijgt in het PostNL tarieven scherm de onderstaande melding:</p>
+                <p><em>File has not been imported. See the following list of errors: %s</em></p>
+                <p><strong>Oorzaak/Oplossing:</strong></p>
+                <p>De data in het csv bestand is niet juist.<br>
+                    Onder deze melding verschijnt een lijst van foutmeldingen voor specifieke data. Corrigeer de fouten en probeer het opnieuw.</p>
+
+                <h2 id="foutcodes_POSTNL-0247">[POSTNL-0247] Invalid PostNL Table Rates File Format in Row</h2>
+                <h3>Probleem</h3>
+                <p>De aangegeven regel van het PostNL tarieven csv bestand heeft niet het juiste format.</p>
+                <h3>Oplossing</h3>
+                <p>Zorg ervoor dat de aangegeven regel in het csv bestand komma-gescheiden is en alle kolommen bevat (zijn er 5).</p>
+
+                <h2 id="foutcodes_POSTNL-0248">[POSTNL-0248] Invalid %s "%s" supplied in row</h2>
+                <h3 >Probleem</h3>
+                <p>De aangegeven regel en kolom van het PostNL tarieven csv bestand heeft niet het juiste bedrag format.</p>
+                <h3>Oplossing</h3>
+                <p>Dit is altijd de <code class="language-plaintext highlighter-rouge">voorwaarden kolom</code>, e.g. <span style="nice">Vanaf gewicht x</span>. Echter is de naam van deze kolom dynamisch, afhankelijk van je tablerate configuratie. Dit kan een van de volgende namen hebben:</p>
+                <ul>
+                    <li>Order Subtotal (an above)</li>
+                    <li>Weight (and above)</li>
+                    <li># of Items (and above)</li>
+                </ul>
+                <p>Zorg ervoor dat deze kolom met een nummer in de US formaat gevuld is. m.a.w. een positief nummer, waarvan de decimal separator een punt is.</p>
+
+                <h2 id="foutcodes_POSTNL-0251">[POSTNL-0251] An error occurred while importing the table rates.</h2>
+                <h3>Probleem</h3>
+                <p>Er is een fout opgetreden bij het importeren van de tarieven.</p>
+                <h3>Oplossing</h3>
+                <p>Verscheidene oorzaken, bekijk de logs voor meer informatie en controleer het csv bestand.</p>
+
+                <h2 id="foutcodes_POSTNL-0252">[POSTNL-0252] There are no valid labels generated. Please check the logs for more information</h2>
+                <h3 >Probleem</h3>
+                <p>Op het moment dat je een order wilt voormelden komt de bovenstaande error in beeld.</p>
+                <h3>Oplossing</h3>
+                <p>Verbind met uw server door middel van SFTP/SSH en bekijk de logs die gegenereerd zijn in var/log/PostNL. Mocht u er niet uit komen, neem dan contact op met PostNL, zij kunnen zien waarom u deze melding krijgt.</p>
+
+            </div>
+        </section>
+        <footer class="site-footer">
+            <section class="page-footer col-xs-8 col-xs-offset-4 col-lg-9 col-lg-offset-3">
+                <span class="site-footer-owner">
+                    <img height="80" class="postnl_footer_logo" alt="PostNL logo" src="media/PostNL-logo.png"/>
+                </span>
+            </section>
+        </footer>
+    </div>
+</div>
+</body>
+</html>
